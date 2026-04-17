@@ -8,8 +8,8 @@
   }
 
   body {
-    background-color: #030303;
-    color: rgba(255, 255, 255, 0.9);
+    background-color: #08080f;
+    color: rgba(255, 255, 255, 0.92);
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -19,7 +19,7 @@
     width: 5px;
   }
   ::-webkit-scrollbar-track {
-    background: #030303;
+    background: #08080f;
   }
   ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.12);
@@ -32,6 +32,6 @@
 
 @layer utilities {
   .card-glass {
-    @apply bg-white/[0.03] border border-white/[0.08] rounded-2xl;
+    @apply bg-white/[0.05] border border-white/[0.10] rounded-2xl;
   }
 }

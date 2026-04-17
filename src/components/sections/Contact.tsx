@@ -60,7 +60,7 @@ export default function Contact() {
             { icon: Phone, label: 'Phone', value: '+44 78799 63402', href: 'tel:+447879963402' },
             { icon: MapPin, label: 'Location', value: 'Belfast, Northern Ireland · Global Talent Visa', href: null },
             { icon: Github, label: 'GitHub', value: 'github.com/Nisarg2543', href: 'https://github.com/Nisarg2543' },
-            { icon: Linkedin, label: 'LinkedIn', value: 'linkedin.com/in/nisarg-makwana', href: 'https://linkedin.com/in/nisarg-makwana' },
+            { icon: Linkedin, label: 'LinkedIn', value: 'linkedin.com/in/nisargmakwana', href: 'https://www.linkedin.com/in/nisargmakwana/' },
           ].map(({ icon: Icon, label, value, href }) => (
             <div
               key={label}

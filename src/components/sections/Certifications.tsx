@@ -8,7 +8,7 @@ const certs = [
     icon: '🎓',
     color: 'from-indigo-500/15',
     iconBg: 'bg-indigo-500/10 border-indigo-500/20',
-    iconColor: 'text-indigo-400',
+    link: null as string | null,
   },
   {
     title: 'Data Analysis in Python',
@@ -16,7 +16,7 @@ const certs = [
     icon: '🐍',
     color: 'from-emerald-500/15',
     iconBg: 'bg-emerald-500/10 border-emerald-500/20',
-    iconColor: 'text-emerald-400',
+    link: null as string | null,
   },
   {
     title: 'FEAST Software Workshop',
@@ -24,7 +24,7 @@ const certs = [
     icon: '🚀',
     color: 'from-rose-500/15',
     iconBg: 'bg-rose-500/10 border-rose-500/20',
-    iconColor: 'text-rose-400',
+    link: null as string | null,
   },
   {
     title: 'SolidWorks Certified',
@@ -32,7 +32,7 @@ const certs = [
     icon: '⚙️',
     color: 'from-cyan-500/15',
     iconBg: 'bg-cyan-500/10 border-cyan-500/20',
-    iconColor: 'text-cyan-400',
+    link: null as string | null,
   },
   {
     title: 'AutoCAD 2D Certified',
@@ -40,7 +40,7 @@ const certs = [
     icon: '📐',
     color: 'from-violet-500/15',
     iconBg: 'bg-violet-500/10 border-violet-500/20',
-    iconColor: 'text-violet-400',
+    link: null as string | null,
   },
   {
     title: 'Aerial Robotics',
@@ -48,7 +48,7 @@ const certs = [
     icon: '🤖',
     color: 'from-amber-500/15',
     iconBg: 'bg-amber-500/10 border-amber-500/20',
-    iconColor: 'text-amber-400',
+    link: null as string | null,
   },
 ]
 
@@ -88,28 +88,42 @@ export default function Certifications() {
         viewport={{ once: true, margin: '-60px' }}
         className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
       >
-        {certs.map((cert) => (
-          <motion.div
-            key={cert.title}
-            variants={item}
-            whileHover={{ y: -3 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-            className={`card-glass bg-gradient-to-br ${cert.color} to-transparent p-5 rounded-2xl group hover:bg-white/[0.05] transition-colors duration-200 cursor-default`}
-          >
-            <div className="flex items-start gap-4">
-              <div className={`w-10 h-10 rounded-xl border ${cert.iconBg} flex items-center justify-center text-xl flex-shrink-0`}>
-                {cert.icon}
-              </div>
-              <div className="min-w-0">
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="text-sm font-semibold text-white/85 leading-snug">{cert.title}</h3>
-                  <Award size={13} className="text-white/20 flex-shrink-0 mt-0.5" />
+        {certs.map((cert) => {
+          const Wrapper = cert.link ? 'a' : 'div'
+          const wrapperProps = cert.link
+            ? { href: cert.link, target: '_blank', rel: 'noreferrer' }
+            : {}
+
+          return (
+            <motion.div
+              key={cert.title}
+              variants={item}
+              whileHover={{ y: -4, scale: 1.02 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            >
+              <Wrapper
+                {...wrapperProps}
+                className={`block bg-white/[0.05] border border-white/[0.10] bg-gradient-to-br ${cert.color} to-transparent p-5 rounded-2xl group hover:bg-white/[0.08] hover:border-white/[0.18] transition-all duration-200 ${cert.link ? 'cursor-pointer' : 'cursor-default'}`}
+              >
+                <div className="flex items-start gap-4">
+                  <div className={`w-10 h-10 rounded-xl border ${cert.iconBg} flex items-center justify-center text-xl flex-shrink-0`}>
+                    {cert.icon}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="text-sm font-semibold text-white/88 leading-snug">{cert.title}</h3>
+                      {cert.link
+                        ? <ExternalLink size={13} className="text-white/30 group-hover:text-white/60 flex-shrink-0 mt-0.5 transition-colors" />
+                        : <Award size={13} className="text-white/20 flex-shrink-0 mt-0.5" />
+                      }
+                    </div>
+                    <p className="text-xs text-white/50 mt-1">{cert.issuer}</p>
+                  </div>
                 </div>
-                <p className="text-xs text-white/40 mt-1">{cert.issuer}</p>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+              </Wrapper>
+            </motion.div>
+          )
+        })}
       </motion.div>
     </div>
   )

@@ -102,7 +102,7 @@ export default function Skills() {
               {skills.map(skill => (
                 <span
                   key={skill}
-                  className="text-xs px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.08] text-white/55 hover:text-white/80 hover:bg-white/[0.10] transition-colors duration-150"
+                  className="text-xs px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.08] text-white/70 hover:text-white/80 hover:bg-white/[0.10] transition-colors duration-150"
                 >
                   {skill}
                 </span>

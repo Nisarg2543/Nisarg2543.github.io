@@ -14,7 +14,7 @@ const fadeUp = (delay: number) => ({
 
 export default function Hero() {
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#030303]">
+    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#08080f]">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.07] via-transparent to-rose-500/[0.05] blur-3xl" />
 
@@ -104,7 +104,7 @@ export default function Hero() {
               <a href="https://github.com/Nisarg2543" target="_blank" rel="noreferrer" className="text-white/35 hover:text-white/70 transition-colors" title="GitHub">
                 <Github size={18} />
               </a>
-              <a href="https://linkedin.com/in/nisarg-makwana" target="_blank" rel="noreferrer" className="text-white/35 hover:text-white/70 transition-colors" title="LinkedIn">
+              <a href="https://www.linkedin.com/in/nisargmakwana/" target="_blank" rel="noreferrer" className="text-white/35 hover:text-white/70 transition-colors" title="LinkedIn">
                 <Linkedin size={18} />
               </a>
               <span className="text-white/15 text-sm">|</span>
@@ -124,7 +124,7 @@ export default function Hero() {
               <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-indigo-500/25 via-violet-500/15 to-rose-500/20 blur-2xl" />
               {/* Outer decorative ring */}
               <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-indigo-500/30 to-rose-500/20 p-[1px]">
-                <div className="w-full h-full rounded-full bg-[#030303]" />
+                <div className="w-full h-full rounded-full bg-[#08080f]" />
               </div>
               {/* Profile image */}
               <div className="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden border-2 border-white/[0.10]">

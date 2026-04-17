@@ -81,16 +81,16 @@ export default function Education() {
               </span>
             </div>
 
-            <p className="text-sm text-white/45 leading-relaxed mb-2 ml-14">
+            <p className="text-sm text-white/62 leading-relaxed mb-2 ml-14">
               <span className="font-medium text-white/55">Coursework: </span>{edu.description}
             </p>
-            <p className="text-sm text-white/38 leading-relaxed mb-5 ml-14">
+            <p className="text-sm text-white/55 leading-relaxed mb-5 ml-14">
               <span className="font-medium text-white/48">Design Project: </span>{edu.project}
             </p>
 
             <div className="flex flex-wrap gap-2 ml-14">
               {edu.tags.map(tag => (
-                <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white/45">
+                <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white/62">
                   {tag}
                 </span>
               ))}

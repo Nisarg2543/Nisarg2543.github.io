@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Github, ExternalLink } from 'lucide-react'
 
 const projects = [
   {
@@ -12,6 +12,8 @@ const projects = [
     color: 'from-indigo-500/10',
     accentColor: 'text-indigo-400',
     borderHover: 'hover:border-indigo-500/30',
+    github: null as string | null,
+    demo: null as string | null,
   },
   {
     emoji: '⚙️',
@@ -23,6 +25,8 @@ const projects = [
     color: 'from-violet-500/10',
     accentColor: 'text-violet-400',
     borderHover: 'hover:border-violet-500/30',
+    github: 'https://github.com/Nisarg2543',
+    demo: null as string | null,
   },
   {
     emoji: '💧',
@@ -34,6 +38,8 @@ const projects = [
     color: 'from-cyan-500/10',
     accentColor: 'text-cyan-400',
     borderHover: 'hover:border-cyan-500/30',
+    github: null as string | null,
+    demo: null as string | null,
   },
   {
     emoji: '⚡',
@@ -45,6 +51,8 @@ const projects = [
     color: 'from-rose-500/10',
     accentColor: 'text-rose-400',
     borderHover: 'hover:border-rose-500/30',
+    github: null as string | null,
+    demo: null as string | null,
   },
   {
     emoji: '🔊',
@@ -56,6 +64,8 @@ const projects = [
     color: 'from-amber-500/10',
     accentColor: 'text-amber-400',
     borderHover: 'hover:border-amber-500/30',
+    github: null as string | null,
+    demo: null as string | null,
   },
   {
     emoji: '🏗️',
@@ -67,6 +77,8 @@ const projects = [
     color: 'from-emerald-500/10',
     accentColor: 'text-emerald-400',
     borderHover: 'hover:border-emerald-500/30',
+    github: null as string | null,
+    demo: null as string | null,
   },
 ]
 
@@ -110,16 +122,44 @@ export default function Projects() {
           <motion.div
             key={proj.title}
             variants={item}
-            whileHover={{ y: -4 }}
-            transition={{ type: 'spring', stiffness: 280 }}
-            className={`card-glass bg-gradient-to-br ${proj.color} to-transparent p-6 rounded-2xl border border-white/[0.08] ${proj.borderHover} transition-all duration-300 group flex flex-col`}
+            whileHover={{ y: -5, scale: 1.01 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            className={`bg-white/[0.05] border border-white/[0.10] ${proj.borderHover} bg-gradient-to-br ${proj.color} to-transparent p-6 rounded-2xl transition-all duration-300 group flex flex-col cursor-default`}
           >
-            <div className="text-3xl mb-4">{proj.emoji}</div>
+            <div className="flex items-start justify-between mb-4">
+              <div className="text-3xl">{proj.emoji}</div>
+              <div className="flex gap-2">
+                {proj.github && (
+                  <a
+                    href={proj.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    className="w-7 h-7 rounded-lg bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.12] transition-all duration-150"
+                    title="View on GitHub"
+                  >
+                    <Github size={13} />
+                  </a>
+                )}
+                {proj.demo && (
+                  <a
+                    href={proj.demo}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    className="w-7 h-7 rounded-lg bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.12] transition-all duration-150"
+                    title="View Demo"
+                  >
+                    <ExternalLink size={13} />
+                  </a>
+                )}
+              </div>
+            </div>
             <h3 className="text-sm font-semibold text-white/90 mb-2 leading-snug">{proj.title}</h3>
-            <p className="text-xs text-white/42 leading-relaxed mb-5 flex-1">{proj.description}</p>
+            <p className="text-xs text-white/55 leading-relaxed mb-5 flex-1">{proj.description}</p>
             <div className="flex flex-wrap gap-1.5 mb-4">
               {proj.tags.map(tag => (
-                <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-white/45">
+                <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.07] border border-white/[0.10] text-white/55">
                   {tag}
                 </span>
               ))}

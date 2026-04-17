@@ -65,8 +65,8 @@ function ResearchCard({ title, venue, note, year, status }: { title: string; ven
       </div>
       <div>
         <h3 className="text-sm font-medium text-white/85 leading-snug mb-1">{title}</h3>
-        <p className="text-xs text-white/40 mb-1">{venue}</p>
-        <p className="text-xs text-white/28 italic">{note}</p>
+        <p className="text-xs text-white/58 mb-1">{venue}</p>
+        <p className="text-xs text-white/45 italic">{note}</p>
       </div>
     </motion.div>
   )
@@ -89,7 +89,7 @@ export default function Research() {
             Academic Work
           </span>
         </h2>
-        <p className="text-sm text-white/38 max-w-xl mt-4 leading-relaxed">
+        <p className="text-sm text-white/55 max-w-xl mt-4 leading-relaxed">
           Ongoing work, academic design projects, and internship research outputs.
           Simulation data and project documentation available on request.
         </p>

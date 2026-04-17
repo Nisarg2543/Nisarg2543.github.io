@@ -11,7 +11,7 @@ import Contact from './components/sections/Contact'
 
 function App() {
   return (
-    <div className="min-h-screen bg-[#030303] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#08080f] text-white overflow-x-hidden">
       <Navbar />
       <main>
         <div id="hero"><Hero /></div>

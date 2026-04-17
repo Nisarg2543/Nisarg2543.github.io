@@ -46,7 +46,7 @@ export default function About() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
-          className="space-y-5 text-white/55 text-base leading-relaxed"
+          className="space-y-5 text-white/70 text-base leading-relaxed"
         >
           <motion.p variants={item}>
             I'm a computational mechanical engineer with an MSc from the University of Leeds and
@@ -87,7 +87,7 @@ export default function About() {
                 <Icon size={16} className="text-indigo-400" />
               </div>
               <p className="text-3xl font-bold text-white tracking-tight">{num}</p>
-              <p className="text-xs text-white/40 mt-1 leading-snug">{label}</p>
+              <p className="text-xs text-white/55 mt-1 leading-snug">{label}</p>
             </motion.div>
           ))}
         </motion.div>

@@ -107,10 +107,10 @@ export default function Experience() {
                       {exp.period}
                     </span>
                   </div>
-                  <p className="text-sm text-white/45 leading-relaxed mb-4">{exp.description}</p>
+                  <p className="text-sm text-white/60 leading-relaxed mb-4">{exp.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {exp.tags.map(tag => (
-                      <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white/50">
+                      <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-white/60">
                         {tag}
                       </span>
                     ))}
