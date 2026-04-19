@@ -3,8 +3,6 @@ import { motion } from 'framer-motion'
 import { Mail, Phone, MapPin, Github, Linkedin, Send, CheckCircle2, Loader2 } from 'lucide-react'
 import emailjs from '@emailjs/browser'
 
-
-
 const item = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number] } },
@@ -22,11 +20,9 @@ export default function Contact() {
   const [error, setError] = useState(false)
 
   async function handleSend(e: React.FormEvent) {
-
     e.preventDefault()
     if (!form.name || !form.email || !form.message) return
-
-        
+    
     setLoading(true)
     setError(false)
 
