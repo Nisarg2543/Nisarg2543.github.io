@@ -1,33 +1,34 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Settings, X, Moon, Sun, Palette, LayoutTemplate } from 'lucide-react'
-import { useTheme, ThemePalette, ThemeStyle } from '@/context/ThemeContext'
+import { Settings, X, Moon, Sun, Leaf, Palette } from 'lucide-react'
+import { useTheme, ThemePalette, ThemeMode } from '@/context/ThemeContext'
+
+const modes: { id: ThemeMode; label: string; icon: React.ElementType }[] = [
+  { id: 'dark', label: 'Dark',  icon: Moon },
+  { id: 'dusk', label: 'Dusk',  icon: Leaf },
+  { id: 'warm', label: 'Warm',  icon: Sun  },
+]
+
+const palettes: { id: ThemePalette; name: string; hex: string }[] = [
+  { id: 'cyan',    name: 'Cyan',    hex: '#00dbe9' },
+  { id: 'violet',  name: 'Violet',  hex: '#cf5cff' },
+  { id: 'emerald', name: 'Emerald', hex: '#10b981' },
+  { id: 'rose',    name: 'Rose',    hex: '#f43f5e' },
+  { id: 'amber',   name: 'Amber',   hex: '#f59e0b' },
+  { id: 'indigo',  name: 'Indigo',  hex: '#6366f1' },
+  { id: 'blue',    name: 'Blue',    hex: '#3b82f6' },
+]
 
 export function ThemeConfigurator() {
   const [isOpen, setIsOpen] = useState(false)
-  const { mode, setMode, palette, setPalette, style, setStyle } = useTheme()
-
-  const palettes: { id: ThemePalette; name: string; color: string }[] = [
-    { id: 'indigo', name: 'Indigo', color: 'bg-indigo-500' },
-    { id: 'emerald', name: 'Emerald', color: 'bg-emerald-500' },
-    { id: 'rose', name: 'Rose', color: 'bg-rose-500' },
-    { id: 'amber', name: 'Amber', color: 'bg-amber-500' },
-  ]
-
-  const styles: { id: ThemeStyle; name: string; desc: string }[] = [
-    { id: 'glassmorphism', name: 'Glass', desc: 'Soft blurs & rounded borders' },
-    { id: 'minimalist', name: 'Minimalist', desc: 'Clean, flat & borderless' },
-    { id: 'cyberpunk', name: 'Cyberpunk', desc: 'Sharp edges & neon glow' },
-    { id: 'precision', name: 'Precision', desc: 'Monochrome & analytical' },
-    { id: 'blueprint', name: 'Blueprint', desc: 'Technical & grid-based' },
-  ];
+  const { mode, setMode, palette, setPalette, glow, setGlow } = useTheme()
 
   return (
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-8 left-8 z-40 p-3 rounded-full bg-surface border border-subtle text-theme-main hover:bg-surface-hover shadow-lg transition-all"
-        aria-label="Open theme settings"
+        className="fixed bottom-8 left-8 z-40 p-3 rounded-full bg-surface border border-border-subtle text-theme-main hover:bg-surface-hover hover:text-accent shadow-lg transition-all"
+        aria-label="Open appearance settings"
       >
         <Settings size={20} />
       </button>
@@ -48,11 +49,23 @@ export function ThemeConfigurator() {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 left-0 bottom-0 w-80 bg-theme-base border-r border-subtle z-[101] shadow-2xl overflow-y-auto flex flex-col"
+              className="fixed top-0 left-0 bottom-0 w-80 z-[101] shadow-2xl overflow-y-auto flex flex-col"
+              style={{
+                background: 'var(--bg-base)',
+                borderRight: '1px solid var(--border-subtle)',
+              }}
             >
-              <div className="p-6 border-b border-subtle flex items-center justify-between sticky top-0 bg-theme-base/80 backdrop-blur-md z-10">
+              {/* Header */}
+              <div
+                className="p-6 flex items-center justify-between sticky top-0 z-10"
+                style={{
+                  background: 'var(--bg-base)',
+                  backdropFilter: 'blur(12px)',
+                  borderBottom: '1px solid var(--border-subtle)',
+                }}
+              >
                 <div className="flex items-center gap-2">
-                  <Palette size={18} className="text-accent" />
+                  <Palette size={16} className="text-accent" />
                   <h2 className="font-semibold text-theme-main">Appearance</h2>
                 </div>
                 <button
@@ -64,56 +77,55 @@ export function ThemeConfigurator() {
               </div>
 
               <div className="p-6 space-y-8 flex-1">
-                {/* Mode Section */}
+
+                {/* Color Mode */}
                 <section>
-                  <h3 className="text-xs font-semibold uppercase tracking-widest text-theme-faint mb-3 flex items-center gap-2">
-                    <Sun size={12} /> Color Mode
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-theme-faint mb-3">
+                    Color Mode
                   </h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      onClick={() => setMode('light')}
-                      className={`py-2.5 px-4 rounded-xl text-sm font-medium flex justify-center items-center gap-2 transition-colors border ${
-                        mode === 'light'
-                          ? 'bg-accent-surface border-accent-border text-accent'
-                          : 'bg-surface border-subtle text-theme-muted hover:text-theme-main'
-                      }`}
-                    >
-                      <Sun size={14} /> Light
-                    </button>
-                    <button
-                      onClick={() => setMode('dark')}
-                      className={`py-2.5 px-4 rounded-xl text-sm font-medium flex justify-center items-center gap-2 transition-colors border ${
-                        mode === 'dark'
-                          ? 'bg-accent-surface border-accent-border text-accent'
-                          : 'bg-surface border-subtle text-theme-muted hover:text-theme-main'
-                      }`}
-                    >
-                      <Moon size={14} /> Dark
-                    </button>
+                  <div className="grid grid-cols-3 gap-2">
+                    {modes.map(({ id, label, icon: Icon }) => (
+                      <button
+                        key={id}
+                        onClick={() => setMode(id)}
+                        className={`py-2.5 px-3 rounded-xl text-sm font-medium flex flex-col items-center gap-1.5 transition-colors border ${
+                          mode === id
+                            ? 'bg-accent-surface border-accent-border text-accent'
+                            : 'bg-surface border-border-subtle text-theme-muted hover:text-theme-main'
+                        }`}
+                      >
+                        <Icon size={14} />
+                        {label}
+                      </button>
+                    ))}
                   </div>
                 </section>
 
-                {/* Palette Section */}
+                {/* Accent Palette */}
                 <section>
-                  <h3 className="text-xs font-semibold uppercase tracking-widest text-theme-faint mb-3 flex items-center gap-2">
-                    <Palette size={12} /> Accent Palette
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-theme-faint mb-3">
+                    Accent Colour
                   </h3>
                   <div className="grid grid-cols-4 gap-2">
                     {palettes.map((p) => (
                       <button
                         key={p.id}
                         onClick={() => setPalette(p.id)}
+                        title={p.name}
                         className={`flex flex-col items-center gap-2 p-2 rounded-xl transition-colors ${
                           palette === p.id ? 'bg-surface-hover' : 'hover:bg-surface'
                         }`}
-                        title={p.name}
                       >
                         <div
-                          className={`w-8 h-8 rounded-full ${p.color} ${palette === p.id ? 'ring-2 ring-offset-2 ring-offset-theme-base ring-accent' : ''}`}
+                          className="w-8 h-8 rounded-full"
+                          style={{
+                            background: p.hex,
+                            boxShadow: palette === p.id
+                              ? `0 0 0 2px var(--bg-base), 0 0 0 3.5px ${p.hex}`
+                              : 'none',
+                          }}
                         />
-                        <span
-                          className={`text-[10px] ${palette === p.id ? 'text-theme-main font-medium' : 'text-theme-muted'}`}
-                        >
+                        <span className={`text-[10px] leading-none ${palette === p.id ? 'text-theme-main font-medium' : 'text-theme-muted'}`}>
                           {p.name}
                         </span>
                       </button>
@@ -121,36 +133,28 @@ export function ThemeConfigurator() {
                   </div>
                 </section>
 
-                {/* Style Section */}
+                {/* Ambient Glow */}
                 <section>
-                  <h3 className="text-xs font-semibold uppercase tracking-widest text-theme-faint mb-3 flex items-center gap-2">
-                    <LayoutTemplate size={12} /> Design Style
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-theme-faint mb-3">
+                    Ambient Glow
                   </h3>
-                  <div className="space-y-2">
-                    {styles.map((s) => (
+                  <div className="grid grid-cols-2 gap-2">
+                    {([true, false] as const).map((val) => (
                       <button
-                        key={s.id}
-                        onClick={() => setStyle(s.id)}
-                        className={`w-full text-left p-3 rounded-xl border transition-all ${
-                          style === s.id
-                            ? 'bg-accent-surface border-accent-border'
-                            : 'bg-surface border-subtle hover:border-hover'
+                        key={String(val)}
+                        onClick={() => setGlow(val)}
+                        className={`py-2.5 px-4 rounded-xl text-sm font-medium transition-colors border ${
+                          glow === val
+                            ? 'bg-accent-surface border-accent-border text-accent'
+                            : 'bg-surface border-border-subtle text-theme-muted hover:text-theme-main'
                         }`}
                       >
-                        <div
-                          className={`font-medium text-sm ${style === s.id ? 'text-accent' : 'text-theme-main'}`}
-                        >
-                          {s.name}
-                        </div>
-                        <div
-                          className={`text-xs mt-1 ${style === s.id ? 'text-accent/70' : 'text-theme-faint'}`}
-                        >
-                          {s.desc}
-                        </div>
+                        {val ? 'On' : 'Off'}
                       </button>
                     ))}
                   </div>
                 </section>
+
               </div>
             </motion.div>
           </>

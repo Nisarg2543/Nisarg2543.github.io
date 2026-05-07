@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Briefcase, ExternalLink } from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
 import { TruncatedText } from '@/components/ui/TruncatedText'
 import { useFilter } from '@/context/FilterContext'
 
@@ -53,35 +53,27 @@ const experiences = [
 
 const item = {
   hidden: { opacity: 0, x: -20 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.65, ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number] },
-  },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.65, ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number] } },
 }
-
-const container = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
-}
+const container = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
 
 export default function Experience() {
   const { activeSkill, setActiveSkill } = useFilter()
 
   return (
-    <div className="py-28 px-6 md:px-12 max-w-6xl mx-auto">
+    <div className="py-28 px-6 md:px-10 max-w-7xl mx-auto">
       <motion.div
         variants={item}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-80px' }}
-        className="mb-16"
+        className="mb-14"
       >
-        <p className="text-xs font-medium tracking-[0.2em] uppercase text-accent mb-3">
-          Work Experience
+        <p className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase text-accent mb-3">
+          <span className="opacity-40">03 —</span> Work Experience
         </p>
-        <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-theme-main">
-          Where I've <span className="text-gradient">worked</span>
+        <h2 className="font-serif text-4xl sm:text-5xl font-semibold tracking-tight text-theme-main leading-tight">
+          Where I've Worked
         </h2>
       </motion.div>
 
@@ -95,7 +87,7 @@ export default function Experience() {
         {/* Timeline line */}
         <div className="absolute left-[18px] top-6 bottom-6 w-px bg-border-subtle hidden sm:block" />
 
-        <div className="space-y-6">
+        <div className="space-y-5">
           {experiences.map((exp) => {
             const isDimmed = activeSkill && !exp.tags.includes(activeSkill)
 
@@ -106,12 +98,12 @@ export default function Experience() {
                 className={`transition-all duration-500 ${isDimmed ? 'opacity-30 grayscale saturate-50' : 'opacity-100'}`}
               >
                 <div className="sm:pl-12 relative">
-                  {/* Dot */}
-                  <div className="absolute left-0 top-6 w-9 h-9 rounded-full bg-surface border border-subtle hidden sm:flex items-center justify-center">
-                    <Briefcase size={14} className="text-theme-faint" />
+                  {/* Timeline dot */}
+                  <div className="absolute left-0 top-6 w-9 h-9 rounded-full bg-surface border border-border-subtle hidden sm:flex items-center justify-center">
+                    <div className="w-2 h-2 rounded-full bg-accent" />
                   </div>
 
-                  <div className={`card-glass p-6 group hover:border-hover`}>
+                  <div className="card-glass p-6 group hover:border-border-hover transition-colors duration-300">
                     <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                       <div>
                         <h3 className="text-base font-semibold text-theme-main">{exp.role}</h3>
@@ -125,7 +117,7 @@ export default function Experience() {
                           <ExternalLink size={10} />
                         </a>
                       </div>
-                      <span className="text-xs text-theme-faint bg-surface border border-subtle px-3 py-1 rounded-full whitespace-nowrap">
+                      <span className="text-[0.65rem] font-semibold tracking-widest uppercase text-theme-faint bg-surface border border-border-subtle px-3 py-1.5 rounded-full whitespace-nowrap">
                         {exp.period}
                       </span>
                     </div>
@@ -141,10 +133,10 @@ export default function Experience() {
                         <button
                           key={tag}
                           onClick={() => setActiveSkill(activeSkill === tag ? null : tag)}
-                          className={`text-xs px-2.5 py-1 rounded-full border transition-colors duration-200 ${
+                          className={`text-[0.65rem] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full border transition-colors duration-200 ${
                             activeSkill === tag
                               ? 'bg-accent-surface border-accent-border text-accent'
-                              : 'bg-surface border-subtle text-theme-muted hover:bg-surface-hover hover:text-theme-main'
+                              : 'bg-surface border-border-subtle text-theme-faint hover:text-theme-main'
                           }`}
                         >
                           {tag}

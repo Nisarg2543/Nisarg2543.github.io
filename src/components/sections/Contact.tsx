@@ -5,17 +5,9 @@ import emailjs from '@emailjs/browser'
 
 const item = {
   hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.65, ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number] },
-  },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number] } },
 }
-
-const container = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
-}
+const container = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
@@ -26,19 +18,13 @@ export default function Contact() {
   async function handleSend(e: React.FormEvent) {
     e.preventDefault()
     if (!form.name || !form.email || !form.message) return
-
     setLoading(true)
     setError(false)
-
     try {
       await emailjs.send(
         'portfolio',
         'template_5gvye3o',
-        {
-          from_name: form.name,
-          reply_to: form.email,
-          message: form.message,
-        },
+        { from_name: form.name, reply_to: form.email, message: form.message },
         'QMNrVeNydFl4TyY4h'
       )
       setSent(true)
@@ -51,18 +37,28 @@ export default function Contact() {
     }
   }
 
+  const contacts = [
+    { icon: Mail, label: 'Email', value: 'nisarg2543@gmail.com', href: 'mailto:nisarg2543@gmail.com' },
+    { icon: Phone, label: 'Phone', value: '+44 78799 63402', href: 'tel:+447879963402' },
+    { icon: MapPin, label: 'Location', value: 'Belfast, Northern Ireland · Global Talent Visa', href: null },
+    { icon: Github, label: 'GitHub', value: 'github.com/Nisarg2543', href: 'https://github.com/Nisarg2543' },
+    { icon: Linkedin, label: 'LinkedIn', value: 'linkedin.com/in/nisargmakwana', href: 'https://www.linkedin.com/in/nisargmakwana/' },
+  ]
+
   return (
-    <div className="py-28 px-6 md:px-12 max-w-6xl mx-auto">
+    <div className="py-28 px-6 md:px-10 max-w-7xl mx-auto">
       <motion.div
         variants={item}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-80px' }}
-        className="mb-16"
+        className="mb-14"
       >
-        <p className="text-xs font-medium tracking-[0.2em] uppercase text-accent mb-3">Contact</p>
-        <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-theme-main">
-          Let's <span className="text-gradient">work together</span>
+        <p className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase text-accent mb-3">
+          <span className="opacity-40">08 —</span> Contact
+        </p>
+        <h2 className="font-serif text-4xl sm:text-5xl font-semibold tracking-tight text-theme-main leading-tight">
+          Initiate Contact
         </h2>
         <p className="text-sm text-theme-faint max-w-md mt-3 leading-relaxed">
           Open to research collaborations, industry roles in computational engineering, and
@@ -75,46 +71,25 @@ export default function Contact() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-60px' }}
-        className="grid lg:grid-cols-2 gap-10"
+        className="grid lg:grid-cols-2 gap-8"
       >
         {/* Contact info */}
-        <motion.div variants={item} className="space-y-4">
-          {[
-            {
-              icon: Mail,
-              label: 'Email',
-              value: 'nisarg2543@gmail.com',
-              href: 'mailto:nisarg2543@gmail.com',
-            },
-            { icon: Phone, label: 'Phone', value: '+44 78799 63402', href: 'tel:+447879963402' },
-            {
-              icon: MapPin,
-              label: 'Location',
-              value: 'Belfast, Northern Ireland · Global Talent Visa',
-              href: null,
-            },
-            {
-              icon: Github,
-              label: 'GitHub',
-              value: 'github.com/Nisarg2543',
-              href: 'https://github.com/Nisarg2543',
-            },
-            {
-              icon: Linkedin,
-              label: 'LinkedIn',
-              value: 'linkedin.com/in/nisargmakwana',
-              href: 'https://www.linkedin.com/in/nisargmakwana/',
-            },
-          ].map(({ icon: Icon, label, value, href }) => (
+        <motion.div variants={item} className="space-y-3">
+          {contacts.map(({ icon: Icon, label, value, href }) => (
             <div
               key={label}
               className="card-glass p-4 flex items-center gap-4 hover:bg-surface-hover transition-colors duration-200 group"
             >
-              <div className="w-9 h-9 rounded-lg bg-accent-surface border border-accent-border flex items-center justify-center flex-shrink-0">
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: 'var(--accent-surface)', border: '1px solid var(--accent-border)' }}
+              >
                 <Icon size={15} className="text-accent" />
               </div>
               <div>
-                <p className="text-[10px] text-theme-faint uppercase tracking-widest">{label}</p>
+                <p className="text-[0.6rem] font-semibold tracking-widest uppercase text-theme-faint">
+                  {label}
+                </p>
                 {href ? (
                   <a
                     href={href}
@@ -135,49 +110,39 @@ export default function Contact() {
         {/* Form */}
         <motion.div variants={item}>
           {sent ? (
-            <div className="card-glass p-8 flex flex-col items-center justify-center text-center gap-4 h-full">
+            <div className="card-glass p-10 flex flex-col items-center justify-center text-center gap-4 h-full">
               <CheckCircle2 size={40} className="text-status-success" />
-              <h3 className="text-lg font-semibold text-theme-main">Message sent!</h3>
-              <p className="text-sm text-theme-faint">
-                Thanks for reaching out. I'll be in touch soon.
-              </p>
+              <h3 className="font-serif text-2xl font-semibold text-theme-main">Message sent.</h3>
+              <p className="text-sm text-theme-faint">Thanks for reaching out. I'll be in touch soon.</p>
               <button
                 onClick={() => setSent(false)}
-                className="text-xs text-accent hover:text-accent-light mt-2 transition-colors"
+                className="text-xs font-semibold tracking-widest uppercase text-accent hover:text-accent-light mt-2 transition-colors"
               >
                 Send another
               </button>
             </div>
           ) : (
             <form onSubmit={handleSend} className="card-glass p-7 space-y-5">
+              {[
+                { id: 'name', label: 'Your name', type: 'text', value: form.name, placeholder: 'Jane Smith' },
+                { id: 'email', label: 'Email', type: 'email', value: form.email, placeholder: 'jane@example.com' },
+              ].map(({ id, label, type, value, placeholder }) => (
+                <div key={id}>
+                  <label className="block text-[0.6rem] font-semibold tracking-widest uppercase text-theme-faint mb-2">
+                    {label}
+                  </label>
+                  <input
+                    type={type}
+                    value={value}
+                    onChange={(e) => setForm((f) => ({ ...f, [id]: e.target.value }))}
+                    placeholder={placeholder}
+                    className="w-full bg-surface-high border border-border-subtle rounded-xl px-4 py-3 text-sm text-theme-main placeholder-theme-faint outline-none focus:border-accent-border transition-colors"
+                    required
+                  />
+                </div>
+              ))}
               <div>
-                <label className="block text-xs text-theme-faint uppercase tracking-widest mb-2">
-                  Your name
-                </label>
-                <input
-                  type="text"
-                  value={form.name}
-                  onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  placeholder="Jane Smith"
-                  className="w-full bg-surface border border-subtle rounded-xl px-4 py-3 text-sm text-theme-main placeholder-theme-faint outline-none focus:border-accent transition-colors"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-theme-faint uppercase tracking-widest mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  value={form.email}
-                  onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                  placeholder="jane@example.com"
-                  className="w-full bg-surface border border-subtle rounded-xl px-4 py-3 text-sm text-theme-main placeholder-theme-faint outline-none focus:border-accent transition-colors"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-theme-faint uppercase tracking-widest mb-2">
+                <label className="block text-[0.6rem] font-semibold tracking-widest uppercase text-theme-faint mb-2">
                   Message
                 </label>
                 <textarea
@@ -185,20 +150,26 @@ export default function Contact() {
                   onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
                   placeholder="What are you working on?"
                   rows={4}
-                  className="w-full bg-surface border border-subtle rounded-xl px-4 py-3 text-sm text-theme-main placeholder-theme-faint outline-none focus:border-accent transition-colors resize-none"
+                  className="w-full bg-surface-high border border-border-subtle rounded-xl px-4 py-3 text-sm text-theme-main placeholder-theme-faint outline-none focus:border-accent-border transition-colors resize-none"
                   required
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-accent hover:opacity-90 text-white font-medium text-sm transition-all duration-200 shadow-lg shadow-accent/20 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-semibold tracking-widest uppercase transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-0.5"
+                style={{
+                  background: 'rgba(0,219,233,0.1)',
+                  border: '1px solid rgba(0,219,233,0.3)',
+                  color: 'var(--accent-primary)',
+                  boxShadow: '0 0 20px rgba(0,219,233,0.1)',
+                }}
               >
                 {loading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
                 {loading ? 'Sending...' : 'Send message'}
               </button>
               {error && (
-                <p className="text-xs text-status-danger text-center mt-2">
+                <p className="text-xs text-status-danger text-center">
                   Something went wrong. Please try again.
                 </p>
               )}

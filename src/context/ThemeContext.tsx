@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 
-export type ThemeMode = 'dark' | 'light'
-export type ThemePalette = 'indigo' | 'emerald' | 'rose' | 'amber'
+export type ThemeMode = 'dark' | 'dusk' | 'warm'
+export type ThemePalette = 'cyan' | 'violet' | 'emerald' | 'rose' | 'amber' | 'indigo' | 'blue'
 export type ThemeStyle = 'glassmorphism' | 'minimalist' | 'cyberpunk' | 'precision' | 'blueprint'
 
 interface ThemeContextType {
@@ -11,43 +11,53 @@ interface ThemeContextType {
   setPalette: (palette: ThemePalette) => void
   style: ThemeStyle
   setStyle: (style: ThemeStyle) => void
+  glow: boolean
+  setGlow: (glow: boolean) => void
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  // Try to load from localStorage, default to initial values
-  const [mode, setMode] = useState<ThemeMode>(
-    () => (localStorage.getItem('theme-mode') as ThemeMode) || 'dark'
-  )
-  const [palette, setPalette] = useState<ThemePalette>(
-    () => (localStorage.getItem('theme-palette') as ThemePalette) || 'indigo'
-  )
+  const [mode, setMode] = useState<ThemeMode>(() => {
+    const stored = localStorage.getItem('theme-mode') as ThemeMode
+    // Migrate old 'light' to 'warm'
+    if (stored === 'light' as string) return 'warm'
+    return stored || 'dark'
+  })
+
+  const [palette, setPalette] = useState<ThemePalette>(() => {
+    const stored = localStorage.getItem('theme-palette')
+    // Migrate old default 'indigo' (which was actually cyan) → 'cyan'
+    if (!stored || stored === 'indigo') return 'cyan'
+    return stored as ThemePalette
+  })
+
   const [style, setStyle] = useState<ThemeStyle>(
     () => (localStorage.getItem('theme-style') as ThemeStyle) || 'glassmorphism'
   )
 
+  const [glow, setGlow] = useState<boolean>(
+    () => localStorage.getItem('theme-glow') !== 'false'
+  )
+
   useEffect(() => {
     const root = window.document.documentElement
-
-    // Remove old attributes to prevent conflicts (though overriding should work)
-    root.removeAttribute('data-mode')
-    root.removeAttribute('data-palette')
-    root.removeAttribute('data-style')
-
-    // Apply new attributes
     root.setAttribute('data-mode', mode)
     root.setAttribute('data-palette', palette)
-    root.setAttribute('data-style', style)
-
-    // Save to localStorage
+    // Remove any stale data-style from localStorage so old style values
+    // (blueprint, precision, etc.) don't override the mode background
+    root.removeAttribute('data-style')
+    localStorage.removeItem('theme-style')
     localStorage.setItem('theme-mode', mode)
     localStorage.setItem('theme-palette', palette)
-    localStorage.setItem('theme-style', style)
   }, [mode, palette, style])
 
+  useEffect(() => {
+    localStorage.setItem('theme-glow', String(glow))
+  }, [glow])
+
   return (
-    <ThemeContext.Provider value={{ mode, setMode, palette, setPalette, style, setStyle }}>
+    <ThemeContext.Provider value={{ mode, setMode, palette, setPalette, style, setStyle, glow, setGlow }}>
       {children}
     </ThemeContext.Provider>
   )

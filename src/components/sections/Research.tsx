@@ -13,15 +13,13 @@ interface ResearchItem {
   status: ResearchStatus
   authors?: string
   abstractPdf?: string
-  presentationPdf?: string
   funding?: string
   tags?: string[]
 }
 
 const conferences: ResearchItem[] = [
   {
-    title:
-      'Simulating Nitric Oxide Diffusion within MOF-Based Polymers Used to Prevent Catheter Related Thrombosis and Infection',
+    title: 'Simulating Nitric Oxide Diffusion within MOF-Based Polymers Used to Prevent Catheter Related Thrombosis and Infection',
     venue: 'Northern Ireland Biomedical Engineering Society (NIBES) Symposium, 1st May 2025',
     note: 'FEBio 4.9 · Multiphase FE model · Experimentally validated NO release profiles · EPSRC funded',
     authors: 'Makwana N., Denton O., Garret G., Morris R., Duncan M., Lennon A., Menary G.',
@@ -32,8 +30,7 @@ const conferences: ResearchItem[] = [
     tags: ['FEBio', 'FEA', 'Biomedical'],
   },
   {
-    title:
-      'Simulating Nitric Oxide Diffusion within MOF-Based Polymers Used to Prevent Catheter Related Thrombosis and Infection',
+    title: 'Simulating Nitric Oxide Diffusion within MOF-Based Polymers Used to Prevent Catheter Related Thrombosis and Infection',
     venue: 'Bioengineering in Ireland 29 (BINI), 26–27 January 2024',
     note: 'FEBio 2.4 · Multi-solute transport FE model · Parametric study of release kinetics',
     authors: 'Makwana N., Garret G.S., Duncan M.J., Morris R.E., Lennon A., Menary G.',
@@ -46,8 +43,7 @@ const conferences: ResearchItem[] = [
 
 const ongoing: ResearchItem[] = [
   {
-    title:
-      'Multiphysics modelling of Nitric Oxide diffusion and release in MOF-loaded polymer catheters',
+    title: 'Multiphysics modelling of Nitric Oxide diffusion and release in MOF-loaded polymer catheters',
     venue: "Queen's University Belfast · in progress",
     note: 'With University of St Andrews · FEBio · Bayesian optimisation · experimental validation against chemiluminescence data',
     year: '2023–now',
@@ -86,42 +82,24 @@ const academic: ResearchItem[] = [
 
 const fadeItem = {
   hidden: { opacity: 0, x: -16 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number] },
-  },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number] } },
 }
+const container = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
 
-const container = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
-}
-
-function ResearchCard({
-  title,
-  venue,
-  note,
-  year,
-  status,
-  authors,
-  abstractPdf,
-  funding,
-  tags,
-}: ResearchItem) {
+function ResearchCard({ title, venue, note, year, status, authors, abstractPdf, funding, tags }: ResearchItem) {
   const { activeSkill, setActiveSkill } = useFilter()
   const isDimmed = activeSkill && tags && !tags.includes(activeSkill)
 
   return (
     <motion.div
       variants={fadeItem}
-      className={`card-glass p-5 flex gap-5 items-start hover:border-hover hover:bg-surface-hover transition-all duration-500 group ${
+      className={`card-glass p-5 flex gap-5 items-start hover:border-border-hover hover:bg-surface-hover transition-all duration-300 group ${
         isDimmed ? 'opacity-30 grayscale saturate-50' : 'opacity-100'
       }`}
     >
       <div className="flex-shrink-0 mt-0.5">
         <span
-          className={`inline-flex items-center gap-1 text-[10px] font-medium px-2.5 py-1 rounded-full border ${
+          className={`inline-flex items-center gap-1 text-[0.6rem] font-semibold tracking-wider uppercase px-2.5 py-1 rounded-full border ${
             status === 'ongoing'
               ? 'bg-status-success/10 border-status-success/25 text-status-success'
               : 'bg-accent-surface border-accent-border text-accent'
@@ -141,17 +119,16 @@ function ResearchCard({
           <TextWithGlossary text={note} />
         </p>
 
-        {/* Render interactive tags if available */}
         {tags && tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-3">
             {tags.map((tag) => (
               <button
                 key={tag}
                 onClick={() => setActiveSkill(activeSkill === tag ? null : tag)}
-                className={`text-[10px] px-2 py-0.5 rounded-full border transition-colors duration-200 ${
+                className={`text-[0.6rem] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full border transition-colors duration-200 ${
                   activeSkill === tag
                     ? 'bg-accent-surface border-accent-border text-accent'
-                    : 'bg-surface border-subtle text-theme-muted hover:bg-surface-hover hover:text-theme-main'
+                    : 'bg-surface border-border-subtle text-theme-faint hover:text-theme-main'
                 }`}
               >
                 {tag}
@@ -160,40 +137,50 @@ function ResearchCard({
           </div>
         )}
 
-        {funding && (
-          <span className="inline-flex items-center text-[10px] text-status-warning bg-status-warning/10 border border-status-warning/20 px-2 py-0.5 rounded-full mr-2">
-            {funding}
-          </span>
-        )}
-        {abstractPdf && (
-          <a
-            href={abstractPdf}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-[11px] font-medium text-accent hover:text-accent-light bg-accent-surface border border-accent-border hover:bg-accent-surface/50 px-2.5 py-1 rounded-full transition-all duration-150"
-          >
-            <FileText size={10} />
-            View Abstract
-          </a>
-        )}
+        <div className="flex flex-wrap gap-2">
+          {funding && (
+            <span className="inline-flex items-center text-[0.6rem] font-semibold tracking-wider uppercase text-status-warning bg-status-warning/10 border border-status-warning/20 px-2 py-0.5 rounded-full">
+              {funding}
+            </span>
+          )}
+          {abstractPdf && (
+            <a
+              href={abstractPdf}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 text-[0.65rem] font-semibold tracking-wider uppercase text-accent bg-accent-surface border border-accent-border hover:bg-accent-surface/60 px-2.5 py-1 rounded-full transition-all duration-150"
+            >
+              <FileText size={10} />
+              View Abstract
+            </a>
+          )}
+        </div>
       </div>
     </motion.div>
   )
 }
 
 export default function Research() {
+  const groups = [
+    { label: 'Conference Presentations', icon: FileText, iconColor: 'text-status-danger', items: conferences },
+    { label: 'Ongoing Research', icon: FlaskConical, iconColor: 'text-status-success', items: ongoing },
+    { label: 'Academic Design Projects', icon: BookOpen, iconColor: 'text-status-info', items: academic },
+  ]
+
   return (
-    <div className="py-28 px-6 md:px-12 max-w-6xl mx-auto">
+    <div className="py-28 px-6 md:px-10 max-w-7xl mx-auto">
       <motion.div
         variants={fadeItem}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-80px' }}
-        className="mb-16"
+        className="mb-14"
       >
-        <p className="text-xs font-medium tracking-[0.2em] uppercase text-accent mb-3">Research</p>
-        <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-theme-main">
-          Research & <span className="text-gradient">Academic Work</span>
+        <p className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase text-accent mb-3">
+          <span className="opacity-40">06 —</span> Research
+        </p>
+        <h2 className="font-serif text-4xl sm:text-5xl font-semibold tracking-tight text-theme-main leading-tight">
+          Research &amp; Academic Work
         </h2>
         <p className="text-sm text-theme-muted max-w-xl mt-4 leading-relaxed">
           Conference presentations, ongoing funded research, and academic design projects.
@@ -202,68 +189,27 @@ export default function Research() {
       </motion.div>
 
       <div className="space-y-10">
-        {/* Conference Presentations */}
-        <div>
-          <div className="flex items-center gap-2 mb-5">
-            <FileText size={13} className="text-status-danger" />
-            <p className="text-xs font-medium tracking-[0.15em] uppercase text-theme-faint">
-              Conference Presentations
-            </p>
+        {groups.map(({ label, icon: Icon, iconColor, items }) => (
+          <div key={label}>
+            <div className="flex items-center gap-2 mb-5">
+              <Icon size={13} className={iconColor} />
+              <p className="text-[0.6rem] font-semibold tracking-[0.18em] uppercase text-theme-faint">
+                {label}
+              </p>
+            </div>
+            <motion.div
+              variants={container}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-60px' }}
+              className="space-y-3"
+            >
+              {items.map((r) => (
+                <ResearchCard key={r.title + r.year} {...r} />
+              ))}
+            </motion.div>
           </div>
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-60px' }}
-            className="space-y-3"
-          >
-            {conferences.map((r) => (
-              <ResearchCard key={r.title + r.year} {...r} />
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Ongoing Research */}
-        <div>
-          <div className="flex items-center gap-2 mb-5">
-            <FlaskConical size={13} className="text-status-success" />
-            <p className="text-xs font-medium tracking-[0.15em] uppercase text-theme-faint">
-              Ongoing Research
-            </p>
-          </div>
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-60px' }}
-            className="space-y-3"
-          >
-            {ongoing.map((r) => (
-              <ResearchCard key={r.title} {...r} />
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Academic Projects */}
-        <div>
-          <div className="flex items-center gap-2 mb-5">
-            <BookOpen size={13} className="text-status-info" />
-            <p className="text-xs font-medium tracking-[0.15em] uppercase text-theme-faint">
-              Academic Design Projects
-            </p>
-          </div>
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-60px' }}
-            className="space-y-3"
-          >
-            {academic.map((r) => (
-              <ResearchCard key={r.title} {...r} />
-            ))}
-          </motion.div>
-        </div>
+        ))}
       </div>
     </div>
   )

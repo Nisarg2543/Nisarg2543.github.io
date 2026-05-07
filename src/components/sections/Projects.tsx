@@ -54,11 +54,11 @@ function ExpandableProjectCard({
         className="w-full p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-left focus:outline-none"
       >
         <div className="flex-1">
-          <div className="inline-flex items-center gap-2 text-xs font-medium text-accent mb-2 uppercase tracking-widest">
-            <ArrowUpRight size={14} />
+          <div className="inline-flex items-center gap-1.5 text-[0.65rem] font-semibold tracking-widest uppercase text-accent mb-2">
+            <ArrowUpRight size={13} />
             {proj.metric}
           </div>
-          <h3 className="text-xl sm:text-2xl font-bold text-theme-main">{proj.title}</h3>
+          <h3 className="font-serif text-xl sm:text-2xl font-semibold text-theme-main">{proj.title}</h3>
         </div>
 
         <div className="flex items-center gap-6">
@@ -66,7 +66,7 @@ function ExpandableProjectCard({
             {proj.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="text-[10px] px-2 py-0.5 rounded-full border bg-surface border-subtle text-theme-muted"
+                className="text-[0.6rem] font-semibold tracking-wider uppercase px-2 py-0.5 rounded-full border bg-surface border-border-subtle text-theme-faint"
               >
                 {tag}
               </span>
@@ -277,22 +277,22 @@ export default function Projects() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
 
   return (
-    <div className="py-32 px-6 md:px-12 max-w-4xl mx-auto">
+    <div className="py-32 px-6 md:px-10 max-w-5xl mx-auto">
       <motion.div
         variants={fadeUp}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-80px' }}
-        className="mb-16 text-center"
+        className="mb-14"
       >
-        <p className="text-xs font-medium tracking-[0.2em] uppercase text-accent mb-4">
-          Selected Works
+        <p className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase text-accent mb-3">
+          <span className="opacity-40">05 —</span> Selected Works
         </p>
-        <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-theme-main mb-6">
-          Engineering & <span className="text-gradient">Simulation</span>
+        <h2 className="font-serif text-4xl sm:text-5xl font-semibold tracking-tight text-theme-main leading-tight">
+          Engineering &amp; Simulation
         </h2>
-        <p className="text-base text-theme-muted leading-relaxed">
-          Deep-dives into finite element analysis, computational fluid dynamics, and optimization
+        <p className="text-base text-theme-muted leading-relaxed mt-4 max-w-xl">
+          Deep-dives into finite element analysis, computational fluid dynamics, and optimisation
           pipelines.
         </p>
       </motion.div>

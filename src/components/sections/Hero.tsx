@@ -1,7 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowDown, Mail, Github, Linkedin, Circle, Download } from 'lucide-react'
-import { ElegantShape } from '@/components/ui/shape-landing-hero'
-import { useTheme } from '@/context/ThemeContext'
+import { ArrowDown, Mail, Github, Linkedin, Download, ArrowRight } from 'lucide-react'
 
 const fadeUp = (delay: number) => ({
   hidden: { opacity: 0, y: 30 },
@@ -17,211 +15,172 @@ const fadeUp = (delay: number) => ({
 })
 
 export default function Hero() {
-  const { style } = useTheme()
-  const isPrecision = style === 'precision'
-
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
-      {/* Background gradient */}
-      {!isPrecision && (
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-status-danger/5 blur-3xl" />
-      )}
+    <div className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden px-6 text-center pt-24 pb-16">
 
-      {/* Floating geometric shapes */}
-      {!isPrecision && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
-          <ElegantShape
-            delay={0.3}
-            width={600}
-            height={140}
-            rotate={12}
-            gradient="from-accent/20"
-            className="left-[-8%] top-[18%]"
-          />
-          <ElegantShape
-            delay={0.5}
-            width={480}
-            height={110}
-            rotate={-15}
-            gradient="from-status-danger/20"
-            className="right-[-4%] top-[68%]"
-          />
-          <ElegantShape
-            delay={0.4}
-            width={280}
-            height={70}
-            rotate={-8}
-            gradient="from-accent-dark/20"
-            className="left-[8%] bottom-[12%]"
-          />
-          <ElegantShape
-            delay={0.6}
-            width={180}
-            height={55}
-            rotate={20}
-            gradient="from-status-info/20"
-            className="right-[18%] top-[12%]"
-          />
-          <ElegantShape
-            delay={0.7}
-            width={140}
-            height={38}
-            rotate={-25}
-            gradient="from-status-warning/20"
-            className="left-[22%] top-[8%]"
+      {/* Dot-grid background */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none opacity-[0.35]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(0,219,233,0.3) 1px, transparent 1px)',
+          backgroundSize: '38px 38px',
+          maskImage: 'radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 100%)',
+        }}
+      />
+
+      {/* Profile image */}
+      <motion.div
+        variants={fadeUp(0.3)}
+        initial="hidden"
+        animate="visible"
+        className="relative mb-8 group"
+      >
+        {/* Gradient glow ring */}
+        <div className="absolute -inset-1.5 rounded-full bg-gradient-to-br from-accent/30 via-secondary/20 to-transparent blur-md opacity-60 group-hover:opacity-90 transition duration-700" />
+        {/* Border ring */}
+        <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-full overflow-hidden border border-border-subtle shadow-2xl">
+          <img
+            src="/nisarg.jpg"
+            alt="Nisarg Makwana"
+            className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
           />
         </div>
-      )}
+      </motion.div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-12 pt-24 pb-16">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-          {/* Left – text */}
-          <div className="flex-1 text-center lg:text-left">
-            <motion.div
-              variants={fadeUp(0.4)}
-              initial="hidden"
-              animate="visible"
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-subtle mb-7 shadow-sm"
-            >
-              <Circle className="h-2 w-2 fill-status-success text-status-success" />
-              <span className="text-xs text-theme-muted tracking-widest uppercase font-medium">
-                Open to opportunities
-              </span>
-            </motion.div>
+      {/* Name */}
+      <motion.h1
+        variants={fadeUp(0.45)}
+        initial="hidden"
+        animate="visible"
+        className="font-serif text-5xl sm:text-6xl lg:text-7xl font-semibold leading-[1.08] tracking-tight text-theme-main mb-4"
+      >
+        Nisarg Makwana
+      </motion.h1>
 
-            <motion.h1
-              variants={fadeUp(0.55)}
-              initial="hidden"
-              animate="visible"
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.06] tracking-tight mb-6"
-            >
-              <span className="bg-clip-text text-transparent bg-gradient-to-b from-theme-main to-theme-muted">
-                FEA · CFD ·
-              </span>
-              <br />
-              <span className="text-gradient">Design Engineer</span>
-            </motion.h1>
+      {/* Title + divider */}
+      <motion.div
+        variants={fadeUp(0.58)}
+        initial="hidden"
+        animate="visible"
+        className="flex flex-col items-center mb-8"
+      >
+        <p className="text-xs sm:text-sm font-semibold tracking-[0.22em] uppercase text-theme-muted mb-3">
+          FEA · CFD · Design Engineer
+        </p>
+        <div className="h-px w-16 bg-gradient-to-r from-transparent via-accent to-transparent opacity-70" />
+      </motion.div>
 
-            <motion.p
-              variants={fadeUp(0.7)}
-              initial="hidden"
-              animate="visible"
-              className="text-base sm:text-lg text-theme-faint max-w-lg mb-10 leading-relaxed font-light mx-auto lg:mx-0"
-            >
-              MSc Advanced Mechanical Engineering (Leeds) — specialising in multiphysics simulation,
-              finite element analysis, CFD, and design optimisation for biomedical and industrial
-              systems.
-            </motion.p>
+      {/* Bio */}
+      <motion.p
+        variants={fadeUp(0.7)}
+        initial="hidden"
+        animate="visible"
+        className="text-base text-theme-faint max-w-lg leading-relaxed font-light mb-10"
+      >
+        MSc Advanced Mechanical Engineering (Leeds) — specialising in multiphysics simulation,
+        finite element analysis, CFD, and design optimisation for biomedical and industrial systems.
+      </motion.p>
 
-            <motion.div
-              variants={fadeUp(0.85)}
-              initial="hidden"
-              animate="visible"
-              className="flex flex-wrap gap-3 justify-center lg:justify-start mb-10"
-            >
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent hover:opacity-90 text-white font-medium text-sm transition-all duration-200 shadow-lg shadow-accent/20"
-              >
-                <Mail size={15} />
-                Get in touch
-              </a>
-              <a
-                href="#projects"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-surface hover:bg-surface-hover border border-subtle text-theme-main font-medium text-sm transition-all duration-200"
-              >
-                View projects
-              </a>
-              <a
-                href="/Nisarg_Makwana_CV.pdf"
-                download
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-surface hover:bg-surface-hover border border-subtle text-theme-main font-medium text-sm transition-all duration-200"
-              >
-                <Download size={15} />
-                Download CV
-              </a>
-            </motion.div>
+      {/* CTAs */}
+      <motion.div
+        variants={fadeUp(0.85)}
+        initial="hidden"
+        animate="visible"
+        className="flex flex-wrap gap-3 justify-center mb-10"
+      >
+        <a
+          href="#contact"
+          className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-xs font-semibold tracking-widest uppercase transition-all duration-300 hover:-translate-y-0.5"
+          style={{
+            background: 'rgba(0,219,233,0.1)',
+            border: '1px solid rgba(0,219,233,0.3)',
+            color: 'var(--accent-primary)',
+            boxShadow: '0 0 20px rgba(0,219,233,0.12)',
+          }}
+          onMouseEnter={(e) => {
+            ;(e.currentTarget as HTMLElement).style.boxShadow =
+              '0 0 30px rgba(0,219,233,0.25)'
+          }}
+          onMouseLeave={(e) => {
+            ;(e.currentTarget as HTMLElement).style.boxShadow =
+              '0 0 20px rgba(0,219,233,0.12)'
+          }}
+        >
+          Initiate Contact
+          <ArrowRight size={13} />
+        </a>
+        <a
+          href="#projects"
+          className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-xs font-semibold tracking-widest uppercase bg-surface border border-border-subtle text-theme-muted hover:text-theme-main hover:bg-surface-hover hover:-translate-y-0.5 transition-all duration-300"
+        >
+          Explore Archive
+        </a>
+        <a
+          href="/Nisarg_Makwana_CV.pdf"
+          download
+          className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-xs font-semibold tracking-widest uppercase bg-surface border border-border-subtle text-theme-muted hover:text-theme-main hover:bg-surface-hover hover:-translate-y-0.5 transition-all duration-300"
+        >
+          <Download size={13} />
+          Download CV
+        </a>
+      </motion.div>
 
-            <motion.div
-              variants={fadeUp(1.0)}
-              initial="hidden"
-              animate="visible"
-              className="flex items-center gap-5 justify-center lg:justify-start"
-            >
-              <a
-                href="mailto:nisarg2543@gmail.com"
-                className="text-theme-faint hover:text-theme-main transition-colors"
-                aria-label="Email"
-                title="Email"
-              >
-                <Mail size={18} />
-              </a>
-              <a
-                href="https://github.com/Nisarg2543"
-                target="_blank"
-                rel="noreferrer"
-                className="text-theme-faint hover:text-theme-main transition-colors"
-                aria-label="GitHub"
-                title="GitHub"
-              >
-                <Github size={18} />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/nisargmakwana/"
-                target="_blank"
-                rel="noreferrer"
-                className="text-theme-faint hover:text-theme-main transition-colors"
-                aria-label="LinkedIn"
-                title="LinkedIn"
-              >
-                <Linkedin size={18} />
-              </a>
-              <span className="text-border-subtle text-sm">|</span>
-              <span className="text-xs text-theme-muted tracking-wide">
-                Belfast, UK · Global Talent Visa
-              </span>
-            </motion.div>
-          </div>
+      {/* Social links */}
+      <motion.div
+        variants={fadeUp(1.0)}
+        initial="hidden"
+        animate="visible"
+        className="flex items-center gap-5"
+      >
+        <a
+          href="mailto:nisarg2543@gmail.com"
+          className="text-theme-faint hover:text-accent transition-colors duration-200"
+          aria-label="Email"
+        >
+          <Mail size={17} />
+        </a>
+        <a
+          href="https://github.com/Nisarg2543"
+          target="_blank"
+          rel="noreferrer"
+          className="text-theme-faint hover:text-accent transition-colors duration-200"
+          aria-label="GitHub"
+        >
+          <Github size={17} />
+        </a>
+        <a
+          href="https://www.linkedin.com/in/nisargmakwana/"
+          target="_blank"
+          rel="noreferrer"
+          className="text-theme-faint hover:text-accent transition-colors duration-200"
+          aria-label="LinkedIn"
+        >
+          <Linkedin size={17} />
+        </a>
+        <span className="w-px h-4 bg-border-subtle" />
+        <span className="text-[0.65rem] font-medium tracking-widest uppercase text-theme-faint">
+          Belfast, UK · Global Talent Visa
+        </span>
+      </motion.div>
 
-          {/* Right – profile image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.88, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 1.1, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] }}
-            className="flex-shrink-0"
-          >
-            <div className="relative">
-              {/* Glow ring */}
-              {!isPrecision && (
-                <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-accent/25 via-accent-light/15 to-status-danger/20 blur-2xl" />
-              )}
-              {/* Outer decorative ring */}
-              <div
-                className={`absolute -inset-1 rounded-full p-[1px] ${isPrecision ? 'bg-border-subtle' : 'bg-gradient-to-br from-accent/30 to-status-danger/20'}`}
-              >
-                <div className="w-full h-full rounded-full bg-theme-base" />
-              </div>
-              {/* Profile image */}
-              <div className="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden border-2 border-border-subtle">
-                <img
-                  src="/nisarg.jpg"
-                  alt="Nisarg Makwana"
-                  className="w-full h-full object-cover object-top"
-                />
-              </div>
-              {/* Floating badge */}
-              <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -bottom-3 -right-3 bg-surface border border-subtle backdrop-blur-md rounded-xl px-3 py-2 shadow-xl"
-              >
-                <p className="text-xs font-medium text-theme-main">Research Assistant</p>
-                <p className="text-[10px] text-accent">Queen's University Belfast</p>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
+      {/* Floating Research Assistant badge */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.7 }}
+        className="absolute bottom-24 right-8 sm:right-16 hidden sm:block"
+      >
+        <motion.div
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          className="card-glass px-4 py-3 shadow-xl"
+        >
+          <p className="text-xs font-semibold text-theme-main">Research Assistant</p>
+          <p className="text-[10px] text-accent mt-0.5">Queen's University Belfast</p>
+        </motion.div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
@@ -234,12 +193,12 @@ export default function Hero() {
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <ArrowDown size={18} className="text-theme-faint" />
+          <ArrowDown size={16} className="text-theme-faint" />
         </motion.div>
       </motion.div>
 
       {/* Bottom fade */}
-      <div className="absolute inset-0 bg-gradient-to-t from-theme-base via-transparent to-theme-base/50 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-theme-base via-transparent to-theme-base/30 pointer-events-none" />
     </div>
   )
 }

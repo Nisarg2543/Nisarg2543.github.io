@@ -9,6 +9,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ['var(--font-main)', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['Newsreader', 'Georgia', 'serif'],
       },
       colors: {
         theme: {
@@ -20,6 +21,8 @@ const config: Config = {
         surface: {
           DEFAULT: 'var(--bg-surface)',
           hover: 'var(--bg-surface-hover)',
+          high: 'var(--bg-surface-high)',
+          lowest: 'var(--bg-surface-lowest)',
         },
         border: {
           subtle: 'var(--border-subtle)',
@@ -34,13 +37,18 @@ const config: Config = {
           'gradient-from': 'var(--accent-gradient-from)',
           'gradient-to': 'var(--accent-gradient-to)',
         },
+        secondary: {
+          DEFAULT: 'var(--accent-secondary)',
+          surface: 'var(--accent-secondary-surface)',
+          border: 'var(--accent-secondary-border)',
+        },
         status: {
           success: 'var(--status-success)',
           info: 'var(--status-info)',
           warning: 'var(--status-warning)',
           danger: 'var(--status-danger)',
-        }
-      }
+        },
+      },
     },
   },
   plugins: [],
